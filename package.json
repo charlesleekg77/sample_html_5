@@ -1,0 +1,11 @@
+{
+  "name": "jesper-landberg-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fluid, motion-driven WebGL portfolio — DOM-synced Three.js planes, Lenis scroll, GSAP transitions.",
+  "type": "module",
+  "scripts": {
+    "dev": "python3 serve.py 12000",
+    "start": "python3 serve.py 12000"
+  }
+}

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en" class="theme-light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="Jesper Landberg — Creative Developer. WebGL, motion and typography portfolio." />
+    <title>Jesper Landberg — Creative Developer</title>
+    <link rel="icon" href="public/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="src/css/style.css" />
+  </head>
+  <body>
+    <!-- Fullscreen WebGL surface: every DOM image is mirrored here. -->
+    <div id="webgl" class="webgl" aria-hidden="true"></div>
+
+    <!-- Fixed film-grain + vignette overlay for the "printed" feel. -->
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header" id="site-header">
+      <a class="site-header__logo" href="#" data-nav="home">JESPER&nbsp;LANDBERG</a>
+      <nav class="site-header__nav mono" aria-label="Primary">
+        <a href="#work" data-nav="work">WORK</a>
+        <a href="#about" data-nav="about">ABOUT</a>
+        <a href="mailto:hello@jesperlandberg.com">CONTACT</a>
+      </nav>
+      <button class="site-header__toggle mono" id="about-toggle" aria-expanded="false" aria-controls="about-drawer">
+        [ ABOUT ]
+      </button>
+    </header>
+
+    <main id="main">
+      <!-- SECTION 1 — Hero -->
+      <section class="hero" id="hero">
+        <h1 class="hero__title" data-reveal>
+          <span class="hero__line">JESPER LANDBERG</span>
+          <span class="hero__line hero__line--sub">CREATIVE DEVELOPER</span>
+        </h1>
+        <div class="hero__foot mono">
+          <p class="hero__index">
+            WORK INDEX — <span id="work-count">00</span> PROJECTS
+          </p>
+          <p class="hero__hint">SCROLL / DRAG TO EXPLORE</p>
+        </div>
+      </section>
+
+      <!-- SECTION 2 — Work showcase -->
+      <section class="work" id="work">
+        <div class="work__label mono">SELECTED WORK / 2021—2024</div>
+        <ul class="work__grid" id="work-grid"><!-- rows injected by main.js --></ul>
+      </section>
+    </main>
+
+    <!-- SECTION 3 — Profile / About slide-over drawer -->
+    <aside class="drawer" id="about-drawer" aria-hidden="true" aria-label="About Jesper Landberg">
+      <button class="drawer__close mono" id="drawer-close" aria-label="Close about panel">[ CLOSE ]</button>
+      <div class="drawer__inner">
+        <p class="drawer__eyebrow mono">PROFILE / 001</p>
+        <h2 class="drawer__title">Creative developer building fluid, motion-led digital experiences.</h2>
+        <p class="drawer__bio">
+          I design and engineer interactive work at the intersection of typography,
+          real-time graphics and motion. My practice centres on custom WebGL pipelines
+          that keep DOM and GPU perfectly in sync — so interfaces feel physical rather
+          than rendered.
+        </p>
+        <div class="drawer__cols">
+          <div class="mono">
+            <h3>RECOGNITION</h3>
+            <ul>
+              <li>Awwwards — Site of the Day ×4</li>
+              <li>Awwwards — Independent of the Year</li>
+              <li>CSS Design Awards — WOTD ×2</li>
+              <li>FWA — of the Day / of the Month</li>
+            </ul>
+          </div>
+          <div class="mono">
+            <h3>CAPABILITIES</h3>
+            <ul>
+              <li>Three.js / OGL / GLSL</li>
+              <li>GSAP / ScrollTrigger / Lenis</li>
+              <li>Next.js / Nuxt / Vite</li>
+              <li>TypeScript / WebGPU (R&amp;D)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="drawer__contact mono">
+          <a href="mailto:hello@jesperlandberg.com">hello@jesperlandberg.com</a>
+          <a href="#" rel="noopener">Instagram</a>
+          <a href="#" rel="noopener">Twitter / X</a>
+          <a href="#" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </aside>
+    <div class="scrim" id="drawer-scrim" aria-hidden="true"></div>
+
+    <!-- SECTION 2b — Project detail overlay (WebGL plane inflates behind this) -->
+    <section class="detail" id="detail" aria-hidden="true">
+      <div class="detail__inner">
+        <div class="detail__bar mono">
+          <span id="detail-index">00 / 00</span>
+          <button id="detail-close" class="detail__close" aria-label="Close project">[ CLOSE ]</button>
+        </div>
+        <h2 class="detail__title" id="detail-title"></h2>
+        <div class="detail__tags mono" id="detail-tags"></div>
+        <div class="detail__content" id="detail-content"></div>
+      </div>
+
+      <!-- SECTION 4 — Pull-up next-project mechanism -->
+      <footer class="detail__footer" id="detail-footer">
+        <div class="pull-ring" id="pull-ring" style="--pull: 0">
+          <svg viewBox="0 0 44 44" class="pull-ring__svg" aria-hidden="true">
+            <circle class="pull-ring__track" cx="22" cy="22" r="19" />
+            <circle class="pull-ring__fill" cx="22" cy="22" r="19" />
+          </svg>
+          <span class="pull-ring__label mono">PULL</span>
+        </div>
+        <span class="detail__next mono">KEEP SCROLLING — NEXT PROJECT</span>
+      </footer>
+    </section>
+
+    <div class="hover-host" id="hover-host" aria-hidden="true"></div>
+
+    <!--
+      GSAP, ScrollTrigger, CustomEase and Lenis ship as UMD bundles: they attach
+      to `window` rather than exporting ES bindings. Load them as classic
+      scripts (in dependency order) before the module graph runs.
+    -->
+    <script src="vendor/gsap.min.js"></script>
+    <script src="vendor/ScrollTrigger.min.js"></script>
+    <script src="vendor/CustomEase.min.js"></script>
+    <script src="vendor/lenis.min.js"></script>
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
